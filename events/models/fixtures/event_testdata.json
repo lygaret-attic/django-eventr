@@ -1,0 +1,74 @@
+[{
+    "pk": 1, 
+    "model": "events.venue", 
+    "fields": {
+        "name": "Fillmore Auditorium",
+        "slug": "fillmore-auditorium", 
+        "description": "In Short – This music venue plays host to shows too big for the Ogden, but too small for an arena. SFX Entertainment changed all that in 1999, taking the decrepit Mammoth Events Center and transforming it seemingly overnight into one of Denver's finest venues. Since then, the succession of bands who have played here include A Perfect Circle, UB40, Brian Setzer, Duran Duran, System of a Down and Lynryd Skynyrd, to name a few.", 
+        "description_html": "<p>In Short – This music venue plays host to shows too big for the Ogden, but too small for an arena. SFX Entertainment changed all that in 1999, taking the decrepit Mammoth Events Center and transforming it seemingly overnight into one of Denver's finest venues. Since then, the succession of bands who have played here include A Perfect Circle, UB40, Brian Setzer, Duran Duran, System of a Down and Lynryd Skynyrd, to name a few.</p>", 
+        "date_created": "2009-11-19 03:56:15", 
+        "date_modified": "2009-11-19 03:56:15", 
+        "address1": "1510 Clakson St.", 
+        "address2": "", 
+        "city": "Denver", 
+        "state": "CO",
+        "zip": "80218", 
+        "email": "", 
+        "phone": "(303) 837-0360", 
+        "link": "http://denver.citysearch.com/profile/external/32999011/denver_co/fillmore_auditorium.html"
+    }
+}, 
+{
+    "pk": 1, 
+    "model": "events.event", 
+    "fields": {
+        "name": "Yonder Mountain String Band",
+        "slug": "yonder-mountain-string-band", 
+        "description": "Yonder Mountain String Band, 2 nights live!", 
+        "description_html": "<p>Yonder Mountain String Band, 2 nights live!</p>", 
+        "date_modified": "2009-11-19 03:56:33", 
+        "date_created": "2009-11-19 03:56:33", 
+        "venue": 1, 
+        "approved": false, 
+        "cost": "13.5", 
+        "categories": []
+    }
+}, 
+{
+    "pk": 2,
+    "model": "events.event",
+    "fields: {
+        "name": "Single Date Event",
+        "slug": "single-date-event",
+        "description": "",
+        "description_html": "",
+        "date_modified": "2009-11-19 03:56:33", 
+        "date_created": "2009-11-19 03:56:33", 
+        "venue": 1, 
+        "approved": false, 
+        "cost": "13.5", 
+        "categories": []
+    }
+
+{
+    "pk": 1, 
+    "model": "events.occurrence", 
+    "fields": {
+        "event": 1, 
+        "start": "2010-02-01 18:00:00", 
+        "end": "2010-02-02 03:00:00", 
+        "recur_values": null, 
+        "recur_type": -1
+    }
+}, 
+{
+    "pk": 2, 
+    "model": "events.occurrence", 
+    "fields": {
+        "event": 1, 
+        "start": "2008-01-01 00:00:00", 
+        "end": "2011-12-31 23:59:00", 
+        "recur_values": "(lp1\n(I4\nI1\ntp2\na.", 
+        "recur_type": 2
+    }
+}]
