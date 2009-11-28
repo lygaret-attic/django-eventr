@@ -86,6 +86,6 @@ class MonthlyRecurrence(Recurrence):
 
             for offset in offsets:
                 d = month_begin + offset
-                if d >= end:
+                if d < start or d >= end:
                     return
                 yield d

@@ -4,13 +4,13 @@ from events.models import *
 admin.site.register(Venue)
 admin.site.register(Category)
 
-class OccuranceInline(admin.TabularInline):
-    model = Occurance
+class OccurrenceInline(admin.TabularInline):
+    model = Occurrence
     extra = 1
 
 class EventAdmin(admin.ModelAdmin):
     inlines = [
-            OccuranceInline,
+            OccurrenceInline,
     ]
 
 admin.site.register(Event, EventAdmin)

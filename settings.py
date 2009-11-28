@@ -77,9 +77,14 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
+    'utils',
     'events',
 )
 
-TEST_RUNNER = 'thirdparty.test_coverage.coverage_runner.run_tests'
-COVERAGE_REPORT_HTML_OUTPUT_DIR = './deploy/reports'
-COVERAGE_CODE_EXCLUDES = [ 'def __unicode__\(self\):', 'def get_absolute_url\(self\):', 'from .* import .*', 'import .*', '^#.*' ]
+def on_test(self):
+    self.INSTALLED_APPS += ("events.tests", "utils.tests",)
+    self.TEST_RUNNER = 'thirdparty.test_coverage.coverage_runner.run_tests'
+    self.COVERAGE_REPORT_HTML_OUTPUT_DIR = './deploy/reports'
+    self.COVERAGE_CODE_EXCLUDES = [ 'def __unicode__\(self\):', 'def get_absolute_url\(self\):', 'from .* import .*', 'import .*', '^#.*' ]
+
+ON_TEST = on_test

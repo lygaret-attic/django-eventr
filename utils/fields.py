@@ -1,19 +1,27 @@
-from django.db.models import fields
+from django.db.models import fields, SubfieldBase
 from django.template.defaultfilters import slugify
 from markdown import markdown
-
-def unique_slug(model, slug_field, slug_value):
-    index = 0
-    orig_slug = slug_value
-    while True:
-        try:
-            model.objects.get(**{slug_field:slug_value})
-        except model.DoesNotExist:
-            return slug_value
-        index += 1
-        slug_value = orig_slug + '-' + str(index)
+import pickle
+import base64
 
 class AutoSlugField(fields.SlugField):
+    """
+    A slug field which can be automatically generated, assuming no slug
+    has been given to the model prior to saving. If you assign a slug during
+    or after creation, that is the slug that will be used.
+    """
+    @staticmethod
+    def unique_slug(model, slug_field, slug_value):
+        index = 0
+        orig_slug = slug_value
+        while True:
+            try:
+                model.objects.get(**{slug_field:slug_value})
+            except model.DoesNotExist:
+                return slug_value
+            index += 1
+            slug_value = orig_slug + '-' + str(index)
+
     def __init__(self, *args, **kwargs):
         if "prepopulate_from" in kwargs:
             self.prepopulate_from = kwargs["prepopulate_from"]
@@ -23,23 +31,28 @@ class AutoSlugField(fields.SlugField):
         return super(AutoSlugField, self).__init__(*args, **kwargs)
 
     def pre_save(self, model_instance, add):
-        if self.prepopulate_from and not model_instance.pk:
+        if self.prepopulate_from and not model_instance.pk and not getattr(model_instance, self.name):
             base = getattr(model_instance, self.prepopulate_from)
             slug = slugify(base) 
             if self.unique:
-                slug = unique_slug(model_instance.__class__, self.name, slug)
+                slug = AutoSlugField.unique_slug(model_instance.__class__, self.name, slug)
             setattr(model_instance, self.name, slug)
             return slug
         else:
             return super(AutoSlugField, self).pre_save(model_instance, add)
 
 class AutoMarkdownTextField(fields.TextField):
+    """
+    A field which auto populates with the value of the given field, 
+    processed through markdown. This field will _always_ repopulate
+    if the value of prepopulate_from is set.
+    """
     def __init__(self, *args, **kwargs):
         if "prepopulate_from" in kwargs:
             self.prepopulate_from = kwargs["prepopulate_from"]
             del(kwargs["prepopulate_from"])
         else:
-            self.prepoulate_from = None
+            self.prepopulate_from = None
         return super(AutoMarkdownTextField, self).__init__(*args, **kwargs)
 
     def pre_save(self, model_instance, add):
@@ -51,44 +64,19 @@ class AutoMarkdownTextField(fields.TextField):
         else:
             return super(AutoMarkdownTextField, self).pre_save(model_instance, add)
 
-try:
-    import cPickle as pickle
-except ImportError:
-    import pickle
 
-class PickleDescriptor(property):
-    def __init__(self, field):
-        self.field = field
+class SerializedDataField(fields.TextField):
+    """
+    A field which serializes python values to the database, and returns
+    them intact.
+    """
+    __metaclass__ = SubfieldBase
 
-    def __set__(self, instance, value):
-        instance.__dict__[self.field.name] = value
-        setattr(instance, self.field.attname, self.field.pickle(value))
+    def to_python(self, value):
+        if value is None or value is "": return
+        if not isinstance(value, basestring): return value
+        return pickle.loads(base64.b64decode(value))
 
-    def __get__(self, instance, owner):
-        if instance is None:
-            return self
-
-        if self.field.name not in instance.__dict__:
-            # The object hasn't been created yet, so unpickle the data
-            raw_data = getattr(instance, self.field.attname)
-            instance.__dict__[self.field.name] = self.field.unpickle(raw_data)
-
-        return instance.__dict__[self.field.name]
-
-class PickleField(fields.TextField):
-    def pickle(self, obj):
-        return pickle.dumps(obj)
-
-    def unpickle(self, data):
-        return pickle.loads(str(data))
-
-    def get_attname(self):
-        return "%s_pickled" % self.name
-
-    def get_db_prep_lookup(self,lookup_type,value):
-        raise ValueError("Can't make comparisons against pickled data.")
-
-    def contribute_to_class(self, cls, name):
-        super(PickleField, self).contribute_to_class(cls, name)
-        setattr(cls, name, PickleDescriptor(self))
-    
+    def get_db_prep_save(self, value):
+        if value is None: return
+        return base64.b64encode(pickle.dumps(value))

@@ -9,7 +9,7 @@ class BaseModel(models.Model):
     name                = models.CharField(max_length=255, blank=False)
     slug                = AutoSlugField(prepopulate_from="name", unique=True, blank=True)
 
-    description         = models.TextField()
+    description         = models.TextField(blank=True)
     description_html    = AutoMarkdownTextField(prepopulate_from="description", blank=True)
 
     date_created        = models.DateTimeField(auto_now_add=True, editable=False)

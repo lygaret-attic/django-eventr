@@ -1,6 +1,6 @@
 from django.db import models
 from utils.models import BaseModel
-from utils.fields import PickleField
+from utils.fields import SerializedDataField
 from events.models import consts, Recurrence
 
 from category import Category
@@ -47,7 +47,7 @@ class Occurrence(models.Model):
     start           = models.DateTimeField()
     end             = models.DateTimeField()
     recur_type      = models.IntegerField(choices=consts.RecurrenceTypes, blank=True, null=True)
-    recur_values    = PickleField(blank=True, null=True)
+    recur_values    = SerializedDataField(blank=True, null=True)
 
     event           = models.ForeignKey(Event, related_name='occurrences')
 
