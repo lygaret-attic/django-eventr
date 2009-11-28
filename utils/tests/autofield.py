@@ -65,6 +65,13 @@ class SerializedDataTests(TestCase):
         self.tuples.data = (1,2,3)
         self.tuples.save()
 
+        self.null = TestSerializedDataModel()
+        self.null.data = None
+        self.null.save()
+
+        self.default = TestSerializedDataModel()
+        self.default.save()
+
     def test_serialized(self):
         l = TestSerializedDataModel.objects.get(pk = 1)
         self.assertEquals(type(l.data), type([1]))
@@ -73,3 +80,11 @@ class SerializedDataTests(TestCase):
         t = TestSerializedDataModel.objects.get(pk = 2)
         self.assertEquals(type(t.data), type((1,)))
         self.assertEquals(t.data, (1,2,3))
+
+    def test_null(self):
+        n = TestSerializedDataModel.objects.get(pk = 3)
+        self.assertEquals(n.data, None)
+
+    def test_default(self):
+        d = TestSerializedDataModel.objects.get(pk = 4)
+        self.assertEquals(d.data, None)

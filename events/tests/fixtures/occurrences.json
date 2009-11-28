@@ -1,0 +1,86 @@
+[
+  {
+    "pk": 1, 
+    "model": "events.occurrence", 
+    "fields": {
+      "indefinite": false, 
+      "end": "2009-02-01", 
+      "recur_type": -1, 
+      "start": "2009-02-01", 
+      "starttime": "18:00:00", 
+      "recur_values": null, 
+      "endtime": "21:00:00", 
+      "event": null
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "events.occurrence", 
+    "fields": {
+      "indefinite": false, 
+      "end": "2009-02-10", 
+      "recur_type": 0, 
+      "start": "2009-02-01", 
+      "starttime": "08:00:00", 
+      "recur_values": null, 
+      "endtime": "14:00:00", 
+      "event": null
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "events.occurrence", 
+    "fields": {
+      "indefinite": true, 
+      "end": null, 
+      "recur_type": 1, 
+      "start": null, 
+      "starttime": "08:00:00", 
+      "recur_values": "KGxwMApJMQphLg==", 
+      "endtime": "14:00:00", 
+      "event": null
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "events.occurrence", 
+    "fields": {
+      "indefinite": false, 
+      "end": "2009-04-30", 
+      "recur_type": 1, 
+      "start": "2009-02-01", 
+      "starttime": "20:00:00", 
+      "recur_values": "KGxwMApJMAphSTIKYS4=",
+      "endtime": "23:00:00", 
+      "event": null
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "events.occurrence", 
+    "fields": {
+      "indefinite": true, 
+      "end": null, 
+      "recur_type": 2, 
+      "start": null, 
+      "starttime": "18:00:00", 
+      "recur_values": "KGxwMAooSTQKSTEKdHAxCmEu", 
+      "endtime": "23:59:59", 
+      "event": null
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "events.occurrence", 
+    "fields": {
+      "indefinite": false, 
+      "end": "2009-08-31", 
+      "recur_type": 2, 
+      "start": "2009-06-01", 
+      "starttime": "19:00:00", 
+      "recur_values": "KGxwMAooSTEKSTEKdHAxCmEoSTMKSTMKdHAyCmEu", 
+      "endtime": "23:59:59", 
+      "event": null
+    }
+  }
+]

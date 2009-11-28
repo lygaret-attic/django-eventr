@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import date, timedelta
 from dateutil.relativedelta import *
 
 from events.models import consts
@@ -33,7 +33,8 @@ class Recurrence(object):
 class DailyRecurrence(Recurrence):
     """ Recurs every day during the requested period """
     def dates_in(self, start, end):
-        for i in range(0, (end - start).days):
+        # plus one is to make the recurrence inclusive
+        for i in range(0, (end - start).days + 1):
             yield start + (D_DAILY * i)
 
 class WeeklyRecurrence(Recurrence):
@@ -75,7 +76,7 @@ class MonthlyRecurrence(Recurrence):
         exp_offsets = [timedelta(d - start.day) for d in self.explicit]
         
         for m in _count(0,1):
-            month_begin = datetime(start.year, start.month, 1) + relativedelta(months=+m)
+            month_begin = date(start.year, start.month, 1) + relativedelta(months=+m)
 
             offsets = list(exp_offsets)
             for imp in self.implicit:

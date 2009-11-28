@@ -13,4 +13,4 @@ class TestAutoSlugModel(models.Model):
     nonpop = fields.AutoSlugField()
 
 class TestSerializedDataModel(models.Model):
-    data = fields.SerializedDataField()
+    data = fields.SerializedDataField(null = True)
