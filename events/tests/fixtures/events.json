@@ -1,1 +1,19 @@
-blah
+[
+  {
+    "pk": 1, 
+    "model": "events.event", 
+    "fields": {
+      "description": "", 
+      "description_html": "", 
+      "date_modified": "2009-12-01 02:57:46", 
+      "venue": null, 
+      "free": false, 
+      "approved": false, 
+      "cost": "12", 
+      "date_created": "2009-12-01 02:57:46", 
+      "slug": "an-event", 
+      "categories": [], 
+      "name": "An Event"
+    }
+  }
+]

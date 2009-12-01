@@ -1,5 +1,6 @@
-from django.core.management.base import BaseCommand
 from optparse import make_option
+from django.core.management.base import BaseCommand
+from django.conf import settings
 
 class Command(BaseCommand):
     option_list = BaseCommand.option_list
@@ -15,9 +16,9 @@ class Command(BaseCommand):
         verbosity = int(options.get('verbosity', 1))
 
         # Create a test database.
+        settings.ON_TEST(settings)
         db_name = connection.creation.create_test_db(verbosity=verbosity)
 
         # Import the fixture data into the test database.
         call_command('loaddata', *fixture_labels, **{'verbosity': verbosity})
-
         call_command('shell')

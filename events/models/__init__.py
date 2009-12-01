@@ -28,8 +28,9 @@ class _consts(object):
 
 consts = _consts()
 
+from event import Event
 from recurrence import Recurrence
-from event import Event, Occurrence
+from occurrence import Occurrence
 from category import Category
 from venue import Venue
 
