@@ -13,7 +13,7 @@ def count(start, off):
         yield start
         start += off
 
-def uniquify(list):
+def uniquify(xs, idfun = None):
     if idfun is None:
         def idfun(x): return x
     seen = {}

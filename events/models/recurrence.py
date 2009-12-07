@@ -2,7 +2,7 @@ from datetime import date, timedelta
 from dateutil.relativedelta import *
 from django.db import models
 from django.db.models import Q
-from util.helpers import count
+from utils.helpers import count
 
 from events.models import consts
 
