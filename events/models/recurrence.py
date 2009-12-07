@@ -1,5 +1,7 @@
 from datetime import date, timedelta
 from dateutil.relativedelta import *
+from django.db import models
+from django.db.models import Q
 
 from events.models import consts
 
@@ -80,7 +82,12 @@ class MonthlyRecurrence(Recurrence):
 
             offsets = list(exp_offsets)
             for imp in self.implicit:
-                imp_offset = timedelta((imp[0] - month_begin.weekday()) % 7) * imp[1]
+
+                # offset calc: (example, 2nd tuesday)
+                # (imp[0] - month_begin.weekday()) % 7 = number of days from start of month is the first
+                # .. + (7 * (imp[1] - 1)) = number of weeks to go forward
+
+                imp_offset = timedelta(((imp[0] - month_begin.weekday()) % 7) + (7 * (imp[1] - 1)))
                 if (month_begin + imp_offset).month == month_begin.month:
                     offsets.append(imp_offset)
             offsets.sort()
@@ -90,3 +97,4 @@ class MonthlyRecurrence(Recurrence):
                 if d < start or d >= end:
                     return
                 yield d
+

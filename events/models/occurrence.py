@@ -15,7 +15,6 @@ class Occurrence(models.Model):
     endtime         = models.TimeField()
     recur_type      = models.IntegerField(choices=consts.RecurrenceTypes, blank=True, null=True)
     recur_values    = SerializedDataField(blank=True, null=True)
-
     event           = models.ForeignKey('Event', related_name='occurrences', null=True)
 
     class Meta:
@@ -39,3 +38,4 @@ class Occurrence(models.Model):
         from events.models import Recurrence
         r = Recurrence.get_recurrence(self.recur_type, self.recur_values)
         return r.all_dates_in(dates[0], dates[1])
+

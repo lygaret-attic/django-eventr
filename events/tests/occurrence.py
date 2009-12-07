@@ -2,6 +2,7 @@ from datetime import date, time
 from django.test import TestCase
 
 from events.models import Occurrence
+from events.models import calendar
 
 # FIXTURE INCLUDES
 #   Pk: 1
@@ -81,4 +82,19 @@ class OccurrenceTests(TestCase):
         self.assertEqual(self.get_date_months(self.window_three), self.expected_months_window_three)
         self.assertEqual(self.get_date_months(self.window_four), self.expected_months_window_four)
 
+    def test_in_week_calendar(self):
+        c = calendar.OneWeek(2009, 8, 3)
+        dates = c.get_datemap()
+        # we have occurrences on the 4th (two, pk = [3, 6]) and on the 7th (pk = 5)
+        self.assertEqual(len(dates.keys()), 2)
+        self.assertEqual(len(dates[date(2009, 8, 4)]), 2)
+        self.assertEqual(len(dates[date(2009, 8, 7)]), 1)
+
+    def test_in_month_calendar(self):
+        c = calendar.OneMonth(2009, 8)
+        dates = c.get_datemap()
+        # we have occurrences on the 4th, 7th, 11th, 18th, 20th and the 25th
+        days = [date(2009, 8, d) for d in [4, 7, 11, 18, 20, 25]]
+        for d in days:
+            self.assertTrue(len(dates[d]) > 0)
 

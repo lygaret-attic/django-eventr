@@ -52,3 +52,21 @@ class RecurrenceTests(TestCase):
         self.assertEqual(len(dates), 9)
         self.assertEqual([6,7,10,6,7,10,3,7,10], [d.day for d in dates])
         self.assertEqual([2,2,2,3,3,3,4,4,4], [d.month for d in dates])
+
+    def test_monthly_recurrence_multiple_implicit(self):
+        r = Recurrence.get_recurrence(consts.Monthly, [(consts.Tuesday, 1), (consts.Thursday, 3)])
+        dates = r.all_dates_in(self.start, self.onemonth)
+        self.assertEqual(len(dates), 2)
+        self.assertEqual([3, 19], [d.day for d in dates])
+
+    def test_monthly_recurrence_single_1st_implicit(self):
+        r = Recurrence.get_recurrence(consts.Monthly, [(consts.Wednesday, 1)])
+        dates = r.all_dates_in(self.start, self.onemonth)
+        self.assertEqual(len(dates), 1)
+        self.assertEqual(4, dates[0].day)
+    
+    def test_monthly_recurrence_single_non_1st_implicit(self):
+        r = Recurrence.get_recurrence(consts.Monthly, [(consts.Wednesday, 2)])
+        dates = r.all_dates_in(self.start, self.onemonth)
+        self.assertEqual(len(dates), 1)
+        self.assertEqual(11, dates[0].day)
