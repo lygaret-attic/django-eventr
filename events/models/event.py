@@ -1,5 +1,6 @@
 from django.db import models
 from utils.models import BaseModel
+from utils.helpers import uniquify
 
 from occurrence import Occurrence
 from category import Category
@@ -32,16 +33,5 @@ class Event(BaseModel):
         for o in self.occurrences.all():
             for d in o.get_dates(start, end):
                 dates.append(d)
-        return self._uniquify(dates)
+        return uniquify(dates)
 
-    def _uniquify(self, xs, idfun=None):
-        if idfun is None:
-            def idfun(x): return x
-        seen = {}
-        result = []
-        for x in xs:
-            marker = idfun(x)
-            if marker in seen: continue
-            seen[marker] = 1
-            result.append(x)
-        return result

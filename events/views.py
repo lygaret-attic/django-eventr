@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from collections import defaultdict
 from datetime import date
 from dateutil.relativedelta import *
-from utils.datehelper import daterange
+from utils.helpers import daterange
 from events.models import Event
 
 minus_one_day = relativedelta(days=-1)

@@ -2,16 +2,12 @@ from datetime import date, timedelta
 from dateutil.relativedelta import *
 from django.db import models
 from django.db.models import Q
+from util.helpers import count
 
 from events.models import consts
 
 D_WEEKLY  = timedelta(weeks=1)
 D_DAILY   = timedelta(1)
-
-def _count(start, off):
-    while True:
-        yield start
-        start += off
 
 class Recurrence(object):
     """
@@ -50,7 +46,7 @@ class WeeklyRecurrence(Recurrence):
     def dates_in(self, start, end):
         offsets = [timedelta((d - start.weekday()) % 7) for d in self.days]
         offsets.sort()
-        for m in _count(0,1):
+        for m in count(0,1):
             for offset in offsets:
                 d = start + (offset + (D_WEEKLY * m))
                 if d >= end:
@@ -77,7 +73,7 @@ class MonthlyRecurrence(Recurrence):
     def dates_in(self, start, end):
         exp_offsets = [timedelta(d - start.day) for d in self.explicit]
         
-        for m in _count(0,1):
+        for m in count(0,1):
             month_begin = date(start.year, start.month, 1) + relativedelta(months=+m)
 
             offsets = list(exp_offsets)
