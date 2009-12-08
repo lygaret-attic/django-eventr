@@ -7,7 +7,7 @@ class Venue(BaseModel):
     A venue is a location where an event can take place.
     A Venue contains identifying and contact information for a particular location.
     """
-    link        = models.URLField()
+    link        = models.URLField(verify_exists=False, max_length=200, blank=True)
     email       = models.EmailField()
     phone       = models.CharField(max_length=16)
 

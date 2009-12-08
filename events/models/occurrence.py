@@ -2,6 +2,15 @@ from django.db import models
 from events.models import consts
 from utils.fields import SerializedDataField
 
+class OccurrenceManager(models.Manager):
+    def get_query_set(self):
+        return super(OccurrenceManager, self).get_query_set()
+
+    def get_in_dates(self, start, end):
+        return self.filter(end__gte = start, end__lte = end) |\
+               self.filter(start__gte = start, start__lte = end) |\
+               self.filter(indefinite = True)
+
 class Occurrence(models.Model):
     """
     An occurrence is a definition of a specific range of dates during which
@@ -16,6 +25,8 @@ class Occurrence(models.Model):
     recur_type      = models.IntegerField(choices=consts.RecurrenceTypes, blank=True, null=True)
     recur_values    = SerializedDataField(blank=True, null=True)
     event           = models.ForeignKey('Event', related_name='occurrences', null=True)
+
+    objects         = OccurrenceManager()
 
     class Meta:
         app_label = 'events'

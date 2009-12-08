@@ -75,8 +75,11 @@ class SerializedDataField(fields.TextField):
     def to_python(self, value):
         if value is None or value is "": return
         if not isinstance(value, basestring): return value
-        return pickle.loads(base64.b64decode(value))
+        try:
+            return pickle.loads(base64.b64decode(value))
+        except:
+            return
 
     def get_db_prep_save(self, value):
-        if value is None: return
+        if value is None or value is "": return
         return base64.b64encode(pickle.dumps(value))

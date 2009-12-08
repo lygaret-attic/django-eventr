@@ -1,11 +1,18 @@
 # Django settings for twid project.
 
+import sys
+import os
+
+sys.path.append('./thirdparty')
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
+
+INTERNAL_IPS = ('127.0.0.1', )
 
 MANAGERS = ADMINS
 
@@ -50,6 +57,8 @@ ADMIN_MEDIA_PREFIX = '/media/'
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '53s-f5k_g(twgd2xbkyuxe&enr-u@!mvuf*5%lm*wj$kl=a1hm'
 
+LOGGING_LOG_SQL = True
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
@@ -61,6 +70,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'djangologging.middleware.LoggingMiddleware',
 )
 
 ROOT_URLCONF = 'twid.urls'
@@ -82,7 +92,7 @@ INSTALLED_APPS = (
 
 def on_test(self):
     self.INSTALLED_APPS += ("events.tests", "utils.tests",)
-    self.TEST_RUNNER = 'thirdparty.test_coverage.coverage_runner.run_tests'
+    self.TEST_RUNNER = 'test_coverage.coverage_runner.run_tests'
     self.COVERAGE_REPORT_HTML_OUTPUT_DIR = './deploy/reports'
     self.COVERAGE_CODE_EXCLUDES = [ 'def __unicode__\(self\):', 'def get_absolute_url\(self\):', 'from .* import .*', 'import .*', '^#.*' ]
 

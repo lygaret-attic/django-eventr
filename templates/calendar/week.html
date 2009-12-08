@@ -1,0 +1,23 @@
+{% load utils %}
+
+<style>
+  .calendar { width: 700px; }
+  .day { width: 98px; height: 100px; border: 1px solid #ccc; border-left-width: 0; float: left; }
+  .day.weekend { background-color: #eee; }
+  .day.events { background-color: #ccf; }
+</style>
+
+<div class="calendar">
+  {% for day in calendar %}
+  <div class="{{ day|cssclasses:'day' }}">
+      <span class="date">{{ day.date|date:"D, M j" }}</span>
+      {% for occurrence in day.occurrences %}
+        {% if loop.first %} <ul> {% endif %}
+        <li>
+        {{ occurrence.starttime|time:"P" }} - {{ occurrence.endtime|time:"P" }} | {{ occurrence.event.name }}
+        </li>
+        {% if loop.last %} </ul> {% endif %}
+      {% endfor %}
+    </div>
+  {% endfor %}
+</div>
