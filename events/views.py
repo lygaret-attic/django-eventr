@@ -5,40 +5,31 @@ from datetime import date
 from dateutil.relativedelta import *
 from utils.helpers import daterange
 from events.models import Event
+from events.models import calendar
 
 minus_one_day = relativedelta(days=-1)
 plus_one_week = relativedelta(days=+6)
 
-def gen_week_dates(startdate):
+def _gen_dates():
     startdate = startdate if startdate else (date.today() + minus_one_day)
     enddate = startdate + plus_one_week
     return (startdate, enddate)
 
-from functools import wraps
-def parsedates():
-    def inner_parse_dates(fn):
-        def wrapped(request, year=None, month=None, day=None):
-            if year is None:
-                return fn(request, startdate = date.today())
-            elif month is None:
-                return fn(request, startdate = date(int(year), 1, 1))
-            elif day is None:
-                return fn(request, startdate = date(int(year), int(month), 1))
-            else:
-                return fn(request, startdate = date(int(year), int(month), int(day)))
-        return wraps(fn)(wrapped)
-    return inner_parse_dates
+def _dateview(request, cal, template):
+    days   = cal.get_alldates()
+    events = cal.get_eventmap()
+    import pdb
+    pdb.set_trace()
+    return render_to_response(template, locals())
 
-@parsedates()
-def calendar(request, startdate = None):
-    start, end = gen_week_dates(startdate)
-    all_events = Event.objects.in_date_range(start, end)
+def thisweek(request):
+    return _dateview(request, calendar.ThisWeek(), 'events/week_calendar.html')
 
-    days    = list(daterange(start, end, days=+1))
-    events  = defaultdict(list)
-    for d in days:
-        for e in all_events:
-            if len(e.get_dates(d, d)) > 0:
-                events[d].append(e)
+def oneyear(request, year):
+    return _dateview(request, calendar.OneYear(int(year)), 'events/week_calendar.html')
+    
+def onemonth(request, year, month):
+    return _dateview(request, calendar.OneMonth(int(year), int(month)), 'events/week_calendar.html')
 
-    return render_to_response('events/week_calendar.html', locals())
+def oneweek(request, year, month, dat):
+    return _dateview(request, calendar.OneWeek(year, month, day), 'events/week_calendar.html')

@@ -2,6 +2,7 @@ from events.models import *
 from datetime import date
 from dateutil.relativedelta import *
 from collections import defaultdict
+from utils.helpers import daterange
 
 class Calendar(object):
     """
@@ -14,6 +15,9 @@ class Calendar(object):
         super(Calendar, self).__init__()
         self.start = start
         self.end = end
+
+    def get_alldates(self):
+        return list(daterange(self.start, self.end, days=+1))
 
     def get_occurrences(self):
         os = Occurrence.objects.filter(start__lte = self.start, end__gte = self.end) |\

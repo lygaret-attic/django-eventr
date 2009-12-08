@@ -9,5 +9,5 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
 
     # root goes last!
-    (r'^events/', include('events.urls')),
+    (r'^', include('events.urls')),
 )
