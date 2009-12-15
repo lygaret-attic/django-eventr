@@ -1,9 +1,7 @@
 
 import sys
-from thirdparty import path
-
-PROJECT_ROOT = path(__file__).abspath().dirname()
-
+from thirdparty.path import path
+PROJECT_ROOT = path(__file__).parent.abspath().dirname()
 sys.path.append(PROJECT_ROOT / 'thirdparty')
 
 DEBUG = True

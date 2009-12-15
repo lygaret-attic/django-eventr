@@ -1,5 +1,4 @@
-from . import common
-common._merge(vars())
+from .common import *
 
 DEBUG = True
 TEMPLATE_DEBUG = True
