@@ -65,7 +65,7 @@ class MonthlyRecurrence(Recurrence):
         for d in days:
             if type(d) is int:
                 self.explicit.append(d)
-            elif type(d) is tuple and len(d) == 2:
+            elif (type(d) is tuple or type(d) is list) and len(d) == 2:
                 self.implicit.append(d)
             else:
                 raise ValueError

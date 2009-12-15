@@ -1,0 +1,159 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Add Event Form</title>
+    <style type="text/css" media="screen">
+      
+    </style>
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+
+      var make_recur = function() {
+        $("#make_recur").click(make_not_recur).text("This is a single event...");
+        $("#recurrence").show();
+      };
+
+      var make_not_recur = function() {
+        $("#make_recur").click(make_recur).text("This is a repeating event...");
+        $("#recurrence").hide();
+      }
+
+      $(function() {
+
+          make_not_recur();
+
+          $("#type").change(function() {
+            var selectedVal = $("#type :selected").text().toLowerCase();
+            $(".typesec").hide();
+            $("#" + selectedVal).show();
+          }).change();
+
+      });
+    </script>
+  </head>
+   <body>
+     <h2>
+        Add An Event
+     </h2>
+     <form action="add_event_form_submit" method="get" accept-charset="utf-8">
+      
+        <label for="name">Name:</label><input type="text" value="name..." />
+        <label for="desc">Description:</label><textarea value="description..."></textarea>
+        <a id="make_recur" href="#">This is a repeating event...</a>
+     
+        <div id="recurrence">
+        <label for="type">This event occurs...</label>
+        <select id="type">
+          <option>Daily</option>
+          <option>Weekly</option>
+          <option>Monthly</option>
+        </select>
+
+        <div class="typesec" id="daily">
+          <h3>Every 
+            <select>
+              <option>day</option>
+              <option>2 days</option>
+              <option>3 days</option>
+              <option>4 days</option>
+            </select>
+            starting...
+          </h3>
+          <select>
+            <option>December</option>
+          </select>
+          <select>
+            <option>3rd,</option>
+          </select>
+          <select>
+            <option>2009</option>
+          </select>
+          <h3>and lasting until...</h3>
+          <select>
+            <option>December</option>
+          </select>
+          <select>
+            <option>9th,</option>
+          </select>
+          <select>
+            <option>2009</option>
+          </select>
+        </div>
+
+        <div class="typesec" id="weekly">
+          <h3>Every 
+            <select>
+              <option>week</option>
+              <option>2 weeks</option>
+              <option>3 weeks</option>
+              <option>4 weeks</option>
+              <option>5 weeks</option>
+              <option>6 weeks</option>
+              <option>7 weeks</option>
+            </select>
+            , on... </h3>
+          <label>Monday</label><input type="checkbox" />&nbsp;
+          <label>Tuesday</label><input type="checkbox" />&nbsp;
+          <label>Wednesday</label><input type="checkbox" />&nbsp;
+          <label>Thursday</label><input type="checkbox" />&nbsp;
+          <label>Friday</label><input type="checkbox" />&nbsp;
+          <h3>Starting on...
+          <select>
+            <option>December</option>
+          </select>
+          <select>
+            <option>9th,</option>
+          </select>
+          <select>
+            <option>2009</option>
+        </select></h3>
+          <h3>and lasting until...
+          <select>
+            <option>December</option>
+          </select>
+          <select>
+            <option>9th,</option>
+          </select>
+          <select>
+            <option>2009</option>
+        </select></h3>
+        </div>
+
+        <div class="typesec" id="monthly">
+          <h3>Every Month, on...</h3>
+          <h4>Specific Days...</h4>
+            <select multiple="multiple">
+              <option>1st</option>
+              <option>2nd</option>
+              <option>3rd</option>
+              <option>4th</option>
+              <option>5th</option>
+              <option>6th</option>
+              <option>7th</option>
+              <option>8th</option>
+              <option>9th</option>
+              <option>10th</option>
+              <option>11th</option>
+            </select>
+            <h4>Or certain weekdays...</h4>
+            <select>
+              <option>First</option>
+              <option>Second</option>
+              <option>Third</option>
+              <option>Fourth</option>
+              <option>Fifth</option>
+            </select>
+            <select>
+              <option>Monday</option>
+              <option>Tuesday</option>
+              <option>Wednesday</option>
+              <option>Thursday</option>
+              <option>Friday</option>
+            </select>
+        </div>
+      </div>
+
+        <p><input type="submit" value="Continue &rarr;"></p>
+     </form>
+   </body>
+</html>

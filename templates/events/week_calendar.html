@@ -1,7 +1,0 @@
-{% load utils %}
-
-{% for day in days %}
-<h2>{{ day|date:"D d M Y" }}</h2>
-events: {{ events|hash:day }}
-{% endfor %}
-{{ events }}

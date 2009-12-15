@@ -4,6 +4,7 @@ class _consts(object):
     Weekly  = 1
     Monthly = 2
     RecurrenceTypes = (
+        (Single, "No Recurrence"),
         (Daily, "Daily"),
         (Weekly, "Weekly"),
         (Monthly, "Monthly"),
@@ -24,6 +25,19 @@ class _consts(object):
         (Friday, "Friday"),
         (Saturday, "Saturday"),
         (Sunday, "Sunday"),
+    )
+
+    First       = 1
+    Second      = 2
+    Third       = 3
+    Fourth      = 4
+    Fifth       = 5
+    RecurrenceInstances = (
+        (First, "First"),
+        (Second, "Second"),
+        (Third, "Third"),
+        (Fourth, "Fourth"),
+        (Fifth, "Fifth"),
     )
 
 consts = _consts()
